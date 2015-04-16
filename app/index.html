@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="assets/app.css"/>
   </head>
 
-  <body ng-app="starterApp" layout="column" ng-controller="UserController as ul">
+  <body ng-app="timeclock" layout="column" ng-controller="UserController as ul">
 
     <md-toolbar layout="row">
       <md-button class="menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show Category List">
@@ -59,7 +59,7 @@
     <script type="text/javascript">
 
           angular
-              .module('starterApp', ['ngMaterial', 'users'])
+              .module('timeclock', ['ngMaterial', 'users'])
               .config(function($mdThemingProvider, $mdIconProvider){
 
                   $mdIconProvider
