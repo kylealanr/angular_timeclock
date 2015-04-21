@@ -13,10 +13,10 @@
     <link rel="stylesheet" href="assets/app.css"/>
   </head>
 
-  <body ng-app="timeclock" layout="column" ng-controller="UserController as userList">
+  <body ng-app="timeclock" layout="column" ng-controller="DrawerController as drawerItems">
 
     <md-toolbar layout="row">
-      <md-button class="menu" hide-gt-sm ng-click="userList.toggleList()" aria-label="Show Category List">
+      <md-button class="menu" hide-gt-sm ng-click="drawerItems.toggleList()" aria-label="Show Category List">
         <md-icon md-svg-icon="menu" ></md-icon>
       </md-button>
       <h1>Geekabytes - Employee Timeclock</h1>
@@ -26,8 +26,8 @@
 
         <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z2" md-component-id="left">
           <md-list>
-            <md-item ng-repeat="index in userList.users">
-                <md-button ng-click="userList.selectUser(index)" ng-class="{'selected' : index === userList.selected }">
+            <md-item ng-repeat="index in drawerItems.drawerItems">
+                <md-button ng-click="drawerItems.selectItem(index)" ng-class="{'selected' : index === drawerItems.selected }">
                   <md-icon md-svg-icon="{{index.avatar}}" class="avatar"></md-icon>
                   {{index.name}}
                 </md-button>
@@ -46,13 +46,13 @@
     <script src="./bower_components/angular-aria/angular-aria.js"></script>
     <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
 
-    <script src="./src/users/Users.js"></script>
-    <script src="./src/users/UserController.js"></script>
+    <script src="src/drawer/Drawer.js"></script>
+    <script src="src/drawer/DrawerController.js"></script>
 
     <script type="text/javascript">
 
           angular
-              .module('timeclock', ['ngMaterial', 'users'])
+              .module('timeclock', ['ngMaterial', 'drawer'])
               .config(function($mdThemingProvider, $mdIconProvider){
 
                   $mdIconProvider

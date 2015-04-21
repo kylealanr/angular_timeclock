@@ -1,10 +1,10 @@
 (function(){
 
   angular
-       .module('users')
-       .controller('UserController', [
+       .module('drawer')
+       .controller('DrawerController', [
           '$mdSidenav',
-          UserController
+          DrawerController
        ]);
 
   /**
@@ -13,11 +13,11 @@
    * @param $mdSidenav
    * @constructor
    */
-  function UserController($mdSidenav) {
+  function DrawerController($mdSidenav) {
     var self = this;
 
     self.selected     = null;
-    self.users        = [
+    self.drawerItems        = [
         {
             name: 'Admin',
             avatar: 'admin',
@@ -39,8 +39,8 @@
             content: "User settings"
         },
     ];
-    self.selectUser   = selectUser;
-    self.toggleList   = toggleUsersList;
+    self.selectItem   = selectItem;
+    self.toggleList   = toggleDrawer;
 
     // *********************************
     // Internal methods
@@ -49,7 +49,7 @@
     /**
      * hide or Show the 'left' sideNav area
      */
-    function toggleUsersList() {
+    function toggleDrawer() {
         $mdSidenav('left').toggle();
     }
 
@@ -57,8 +57,8 @@
      * Select the current avatars
      * @param menuId
      */
-    function selectUser ( user ) {
-      self.selected = angular.isNumber(user) ? $scope.users[user] : user;
+    function selectItem (drawer ) {
+      self.selected = angular.isNumber(drawer) ? $scope.drawerItems[drawer] : drawer;
       self.toggleList();
     }
   }
