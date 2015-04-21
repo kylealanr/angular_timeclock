@@ -79,6 +79,8 @@
                               })
                               .when('/clock_in', {
                                   templateUrl: 'src/events/views/new_event.html'
+                              }).otherwise('', {
+                                  templateUrl: 'src/users/views/auth.html'
                               });
               })
               //in line event listener to handle the login
