@@ -72,8 +72,9 @@
 
                       $mdThemingProvider.theme('default')
                               .primaryPalette('cyan')
-                              .accentPalette('light-blue')
-                  })
+                              .accentPalette('light-blue');
+
+              })
               .controller('ExampleCtrl', function ($scope) {
                   $scope.$on('event:google-plus-signin-success', function (event, authResult) {
                       // User successfully authorized the G+ App!

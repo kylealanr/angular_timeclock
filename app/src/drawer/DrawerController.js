@@ -7,12 +7,6 @@
           DrawerController
        ]);
 
-  /**
-   * Main Controller for the Angular Material Starter App
-   * @param $scope
-   * @param $mdSidenav
-   * @constructor
-   */
   function DrawerController($mdSidenav) {
     var self = this;
 
@@ -55,7 +49,7 @@
 
     /**
      * Select the current avatars
-     * @param menuId
+     * @param drawer
      */
     function selectItem (drawer ) {
       self.selected = angular.isNumber(drawer) ? $scope.drawerItems[drawer] : drawer;
