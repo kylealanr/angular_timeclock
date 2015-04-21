@@ -13,36 +13,30 @@
     <link rel="stylesheet" href="assets/app.css"/>
   </head>
 
-  <body ng-app="timeclock" layout="column" ng-controller="UserController as ul">
+  <body ng-app="timeclock" layout="column" ng-controller="UserController as userList">
 
     <md-toolbar layout="row">
-      <md-button class="menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Show Category List">
+      <md-button class="menu" hide-gt-sm ng-click="userList.toggleList()" aria-label="Show Category List">
         <md-icon md-svg-icon="menu" ></md-icon>
       </md-button>
-      <h1>Angular Material - Starter App</h1>
+      <h1>Geekabytes - Employee Timeclock</h1>
     </md-toolbar>
 
     <div flex layout="row">
 
         <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z2" md-component-id="left">
           <md-list>
-            <md-item ng-repeat="it in ul.users">
-                <md-button ng-click="ul.selectUser(it)" ng-class="{'selected' : it === ul.selected }">
-                  <md-icon md-svg-icon="{{it.avatar}}" class="avatar"></md-icon>
-                  {{it.name}}
+            <md-item ng-repeat="index in userList.users">
+                <md-button ng-click="userList.selectUser(index)" ng-class="{'selected' : index === userList.selected }">
+                  <md-icon md-svg-icon="{{index.avatar}}" class="avatar"></md-icon>
+                  {{index.name}}
                 </md-button>
             </md-item>
           </md-list>
         </md-sidenav>
 
         <md-content flex id="content">
-          <md-icon md-svg-icon="{{ul.selected.avatar}}" class="avatar"></md-icon>
-          <h2>{{ul.selected.name}}</h2>
-          <p>{{ul.selected.content}}</p>
-
-          <md-button class="share" md-no-ink ng-click="ul.share($event)" aria-label="Share">
-            <md-icon md-svg-icon="share"></md-icon>
-          </md-button>
+            <md-button class="md-raised" type="submit">Clock In</md-button>
         </md-content>
 
     </div>
@@ -54,7 +48,6 @@
 
     <script src="./src/users/Users.js"></script>
     <script src="./src/users/UserController.js"></script>
-    <script src="./src/users/UserService.js"></script>
 
     <script type="text/javascript">
 
@@ -64,12 +57,10 @@
 
                   $mdIconProvider
                       .defaultIconSet("./assets/svg/avatars.svg", 128)
-                      .icon("menu"       , "./assets/svg/menu.svg"        , 24)
-                      .icon("share"      , "./assets/svg/share.svg"       , 24)
-                      .icon("google_plus", "./assets/svg/google_plus.svg" , 512)
-                      .icon("hangouts"   , "./assets/svg/hangouts.svg"    , 512)
-                      .icon("twitter"    , "./assets/svg/twitter.svg"     , 512)
-                      .icon("phone"      , "./assets/svg/phone.svg"       , 512);
+                      .icon("admin"      , "./assets/svg/admin.svg"       , 128)
+                      .icon("archive"    , "./assets/svg/archive.svg"     , 128)
+                      .icon("notebook"   , "./assets/svg/notebook.svg"    , 100)
+                      .icon("settings"   , "./assets/svg/settings.svg"    , 128);
 
                       $mdThemingProvider.theme('default')
                           .primaryPalette('cyan')
