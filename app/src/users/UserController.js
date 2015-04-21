@@ -6,4 +6,6 @@ angular.module('users')
 
 function UserController(){
     var self = this;
+
+    $scope.user = "Test User";
 }

@@ -9,6 +9,7 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
 
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css"/>
     <link rel="stylesheet" href="assets/app.css"/>
   </head>
@@ -35,22 +36,12 @@
           </md-list>
         </md-sidenav>
 
-        <md-content flex id="content">
-            <md-button class="md-raised" type="submit">Clock In</md-button>
-
-            <div ng-app="directive.g+signin" ng-controller="ExampleCtrl">
-               <!-- <google-plus-signin clientid="85483097552-rme79iso0uf2pduuo5r00431atcblvrf.apps.googleusercontent.com"></google-plus-signin> -->
-
-                <google-plus-signin clientid="85483097552-j88q90917r1gvgmku4d2d5bd9fb8dqbh.apps.googleusercontent.com"></google-plus-signin>
-            </div>
-
-        </md-content>
-
-
+        <div flex layout="row" ng-view></div>
 
     </div>
 
     <script src="./bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="./bower_components/angular-animate/angular-animate.js"></script>
     <script src="./bower_components/angular-aria/angular-aria.js"></script>
     <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
@@ -62,8 +53,8 @@
     <script type="text/javascript">
 
           angular
-              .module('timeclock', ['ngMaterial', 'drawer', 'directive.g+signin'])
-              .config(function($mdThemingProvider, $mdIconProvider) {
+              .module('timeclock', ['ngMaterial', 'drawer', 'directive.g+signin', 'ngRoute'])
+              .config(function($mdThemingProvider, $mdIconProvider, $routeProvider) {
 
                       $mdIconProvider
                               .defaultIconSet("./assets/svg/avatars.svg", 128)
@@ -76,6 +67,19 @@
                               .primaryPalette('cyan')
                               .accentPalette('light-blue');
 
+                      $routeProvider
+                              .when('/', {
+                                  templateUrl: 'src/users/views/auth.html'
+                              })
+                              .when('/login', {
+                                  templateUrl: 'src/users/views/auth.html'
+                              })
+                              .when('/events', {
+                                  templateUrl: 'src/events/views/event_list.html'
+                              })
+                              .when('/clock_in', {
+                                  templateUrl: 'src/events/views/new_event.html'
+                              });
               })
               //in line event listener to handle the login
               .controller('ExampleCtrl', function ($scope) {

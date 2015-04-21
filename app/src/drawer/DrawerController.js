@@ -15,22 +15,26 @@
         {
             name: 'Admin',
             avatar: 'admin',
-            content: 'Admin panel'
+            content: 'Admin panel',
+            relativeUrl: ''
         },
         {
             name: 'Log New',
             avatar: 'notebook',
-            content: 'Clock in goes here'
+            content: 'Clock in goes here',
+            relativeUrl: '/login'
         },
         {
             name: 'Events',
             avatar: 'archive',
-            content: 'Clock in here'
+            content: 'Clock in here',
+            relativeUrl: '/events'
         },
         {
             name: 'Settings',
             avatar: 'settings',
-            content: "User settings"
+            content: "User settings",
+            relativeUrl: '/settings'
         },
     ];
     self.selectItem   = selectItem;
