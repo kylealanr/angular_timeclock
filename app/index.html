@@ -39,7 +39,9 @@
             <md-button class="md-raised" type="submit">Clock In</md-button>
 
             <div ng-app="directive.g+signin" ng-controller="ExampleCtrl">
-                <google-plus-signin clientid="85483097552-rme79iso0uf2pduuo5r00431atcblvrf.apps.googleusercontent.com"></google-plus-signin>
+               <!-- <google-plus-signin clientid="85483097552-rme79iso0uf2pduuo5r00431atcblvrf.apps.googleusercontent.com"></google-plus-signin> -->
+
+                <google-plus-signin clientid="85483097552-j88q90917r1gvgmku4d2d5bd9fb8dqbh.apps.googleusercontent.com"></google-plus-signin>
             </div>
 
         </md-content>
@@ -75,13 +77,16 @@
                               .accentPalette('light-blue');
 
               })
+              //in line event listener to handle the login
               .controller('ExampleCtrl', function ($scope) {
                   $scope.$on('event:google-plus-signin-success', function (event, authResult) {
-                      // User successfully authorized the G+ App!
+                      $scope.authenicated = true;
                       console.log('Signed in!');
+                      //I'm getting back a valid access token, I need to pass it off to the controller to get the users name
+                      console.log(authResult.access_token);
                   });
                   $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
-                      // User has not authorized the G+ App!
+                      $scope.authenicated = false;
                       console.log('Not signed into Google Plus.');
                   });
 
