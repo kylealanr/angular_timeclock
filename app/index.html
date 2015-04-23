@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" >
   <head>
-    <title>Angular Material - Starter App</title>
+    <title>Geekabytes - Employee Timeclock</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -80,6 +80,8 @@
                               })
                               .when('/clock_in', {
                                   templateUrl: 'src/events/views/new_event.html'
+                              }).otherwise('', {
+                                  templateUrl: 'src/users/views/auth.html'
                               });
               })
               //in line event listener to handle the login

@@ -4,10 +4,11 @@
        .module('drawer')
        .controller('DrawerController', [
           '$mdSidenav',
+          '$location',
           DrawerController
        ]);
 
-  function DrawerController($mdSidenav) {
+  function DrawerController($mdSidenav, $location) {
     var self = this;
 
     self.selected     = null;
@@ -16,7 +17,7 @@
             name: 'Admin',
             avatar: 'admin',
             content: 'Admin panel',
-            relativeUrl: ''
+            relativeUrl: '/admin'
         },
         {
             name: 'Log New',
@@ -55,8 +56,10 @@
      * Select the current avatars
      * @param drawer
      */
-    function selectItem (drawer ) {
+    function selectItem (drawer) {
       self.selected = angular.isNumber(drawer) ? $scope.drawerItems[drawer] : drawer;
+      console.log($location);
+      $location.path(self.selected.relativeUrl);
       self.toggleList();
     }
   }
