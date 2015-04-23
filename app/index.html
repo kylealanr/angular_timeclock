@@ -58,6 +58,7 @@
 
                       $mdIconProvider
                               .defaultIconSet("./assets/svg/avatars.svg", 128)
+                              .icon("menu", "./assets/svg/menu.svg", 24)
                               .icon("admin", "./assets/svg/admin.svg", 128)
                               .icon("archive", "./assets/svg/archive.svg", 128)
                               .icon("notebook", "./assets/svg/notebook.svg", 100)
@@ -82,12 +83,27 @@
                               });
               })
               //in line event listener to handle the login
-              .controller('ExampleCtrl', function ($scope) {
+              .controller('ExampleCtrl', function ($scope, $http) {
                   $scope.$on('event:google-plus-signin-success', function (event, authResult) {
                       $scope.authenicated = true;
                       console.log('Signed in!');
                       //I'm getting back a valid access token, I need to pass it off to the controller to get the users name
-                      console.log(authResult.access_token);
+                      console.log("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + authResult.access_token);
+                      var $endpoint = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + authResult.access_token;
+
+                      var getUserInfo = function($endpoint){
+                          $http.get($endpoint).
+                                  success(function(data, status, headers, config) {
+                                      console.log(data);
+                                  }).
+                                  error(function(data, status, headers, config) {
+                                      console.log("error");
+                                  });
+                      };
+
+                      getUserInfo($endpoint);
+
+                      console.log("made http request to get user info");
                   });
                   $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
                       $scope.authenicated = false;

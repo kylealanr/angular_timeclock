@@ -7,5 +7,13 @@ angular.module('users')
 function UserController(){
     var self = this;
 
-    $scope.user = "Test User";
+    var getUserInfo = function($endpoint){
+        $http.get($endpoint).
+            success(function(data, status, headers, config) {
+                console.log(data);
+            }).
+            error(function(data, status, headers, config) {
+                console.log("error");
+            });
+    };
 }
