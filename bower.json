@@ -11,7 +11,8 @@
     "angular-aria": "^1.3.x",
     "angular-material": "^0.8.0",
     "angular-directive.g-signin": "",
-    "angular-route": ""
+    "angular-route": "",
+    "parse-angular-patch": ""
   },
   "devDependencies": {
     "angular-material": "~0.8.3"
