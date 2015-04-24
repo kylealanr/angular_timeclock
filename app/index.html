@@ -1,142 +1,158 @@
 <!DOCTYPE html>
-<html lang="en" >
-  <head>
+<html lang="en">
+<head>
     <title>Geekabytes - Employee Timeclock</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
 
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.min.css"/>
     <link rel="stylesheet" href="assets/app.css"/>
     <script src="//www.parsecdn.com/js/parse-1.4.2.min.js"></script>
-  </head>
+</head>
 
-  <body ng-app="timeclock" layout="column" ng-controller="DrawerController as drawerItems">
+<body ng-app="timeclock" layout="column" ng-controller="DrawerController as drawerItems">
 
-    <md-toolbar layout="row">
-      <md-button class="menu" hide-gt-sm ng-click="drawerItems.toggleList()" aria-label="Show Category List">
-        <md-icon md-svg-icon="menu" ></md-icon>
-      </md-button>
-      <h1>Geekabytes - Employee Timeclock</h1>
-    </md-toolbar>
+<md-toolbar layout="row">
+    <md-button class="menu" hide-gt-sm ng-click="drawerItems.toggleList()" aria-label="Show Category List">
+        <md-icon md-svg-icon="menu"></md-icon>
+    </md-button>
+    <h1>Geekabytes - Employee Timeclock</h1>
+</md-toolbar>
 
-    <div flex layout="row">
+<div flex layout="row">
 
-        <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z2" md-component-id="left">
-          <md-list>
+    <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z2" md-component-id="left">
+        <md-list>
             <md-item ng-repeat="index in drawerItems.drawerItems">
-                <md-button ng-click="drawerItems.selectItem(index)" ng-class="{'selected' : index === drawerItems.selected }">
-                  <md-icon md-svg-icon="{{index.avatar}}" class="avatar"></md-icon>
-                  {{index.name}}
+                <md-button ng-click="drawerItems.selectItem(index)"
+                           ng-class="{'selected' : index === drawerItems.selected }">
+                    <md-icon md-svg-icon="{{index.avatar}}" class="avatar"></md-icon>
+                    {{index.name}}
                 </md-button>
             </md-item>
-          </md-list>
-        </md-sidenav>
+        </md-list>
+    </md-sidenav>
 
-        <div flex layout="row" ng-view></div>
+    <div flex layout="row" ng-view></div>
 
-    </div>
+</div>
 
-    <script src="./bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="./bower_components/angular-animate/angular-animate.js"></script>
-    <script src="./bower_components/angular-aria/angular-aria.js"></script>
-    <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
-    <script src="./bower_components/angular-directive.g-signin/google-plus-signin.js"></script>
+<script src="./bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-route/angular-route.min.js"></script>
+<script src="./bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="./bower_components/angular-aria/angular-aria.min.js"></script>
+<script type="text/javascript" src="./bower_components/angular-material/angular-material.min.js"></script>
+<script src="./bower_components/angular-directive.g-signin/google-plus-signin.js"></script>
 
-    <script src="src/drawer/Drawer.js"></script>
-    <script src="src/drawer/DrawerController.js"></script>
+<script src="src/drawer/Drawer.js"></script>
+<script src="src/drawer/DrawerController.js"></script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-          angular
-              .module('timeclock', ['ngMaterial', 'drawer', 'directive.g+signin', 'ngRoute'])
-              .config(function($mdThemingProvider, $mdIconProvider, $routeProvider) {
+    angular
+        .module('timeclock', ['ngMaterial', 'drawer', 'directive.g+signin', 'ngRoute'])
+        .config(function ($mdThemingProvider, $mdIconProvider, $routeProvider) {
 
-                      $mdIconProvider
-                              .defaultIconSet("./assets/svg/avatars.svg", 128)
-                              .icon("menu", "./assets/svg/menu.svg", 24)
-                              .icon("admin", "./assets/svg/admin.svg", 128)
-                              .icon("archive", "./assets/svg/archive.svg", 128)
-                              .icon("notebook", "./assets/svg/notebook.svg", 100)
-                              .icon("settings", "./assets/svg/settings.svg", 128);
+            $mdIconProvider
+                    .defaultIconSet("./assets/svg/avatars.svg", 128)
+                    .icon("menu", "./assets/svg/menu.svg", 24)
+                    .icon("admin", "./assets/svg/admin.svg", 128)
+                    .icon("archive", "./assets/svg/archive.svg", 128)
+                    .icon("notebook", "./assets/svg/notebook.svg", 100)
+                    .icon("settings", "./assets/svg/settings.svg", 128);
 
-                      $mdThemingProvider.theme('default')
-                              .primaryPalette('cyan')
-                              .accentPalette('light-blue');
+            $mdThemingProvider.theme('default')
+                    .primaryPalette('cyan')
+                    .accentPalette('light-blue');
 
-                      $routeProvider
-                              .when('/', {
-                                  templateUrl: 'src/users/views/auth.html'
-                              })
-                              .when('/login', {
-                                  templateUrl: 'src/users/views/auth.html'
-                              })
-                              .when('/events', {
-                                  templateUrl: 'src/events/views/event_list.html'
-                              })
-                              .when('/clock_in', {
-                                  templateUrl: 'src/events/views/new_event.html'
-                              }).otherwise('', {
-                                  templateUrl: 'src/users/views/auth.html'
-                              });
-              })
-              //in line event listener to handle the login
-              .controller('ExampleCtrl', function ($scope, $http) {
-                  $scope.$on('event:google-plus-signin-success', function (event, authResult) {
-                      $scope.authenicated = true;
-                      console.log('Signed in!');
-                      //I'm getting back a valid access token, I need to pass it off to the controller to get the users name
-                      console.log("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + authResult.access_token);
-                      var $endpoint = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + authResult.access_token;
+            $routeProvider
+                    .when('/', {
+                        templateUrl: 'src/users/views/auth.html'
+                    })
+                    .when('/login', {
+                        templateUrl: 'src/users/views/auth.html'
+                    })
+                    .when('/events', {
+                        templateUrl: 'src/events/views/event_list.html'
+                    })
+                    .when('/clock_in', {
+                        templateUrl: 'src/events/views/new_event.html'
+                    }).otherwise('', {
+                        templateUrl: 'src/users/views/auth.html'
+                    });
+        })
+        //in line event listener to handle the login
+        .controller('ExampleCtrl', function ($scope, $http) {
+            Parse.initialize("AVKrYGejn3pUMZ3m1JiYWkG2tnT3FhFSQM4iWgz6", "QPHxANIlclXKQZix2WDuVtbFMUBrSkVZCFSeNsrb");
 
-                      Parse.initialize("AVKrYGejn3pUMZ3m1JiYWkG2tnT3FhFSQM4iWgz6", "QPHxANIlclXKQZix2WDuVtbFMUBrSkVZCFSeNsrb");
+            $scope.$on('event:google-plus-signin-success', function (event, authResult) {
+                $scope.authenicated = true;
+                console.log('Signed in!');
+                //I'm getting back a valid access token, I need to pass it off to the controller to get the users name
+                console.log("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + authResult.access_token);
+                var $endpoint = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + authResult.access_token;
 
-                      var getUserInfo = function($endpoint){
-                          $http.get($endpoint).
-                                  success(function(data, status, headers, config) {
-                                      console.log(data);
+                getUserInfo($endpoint);
 
-                                      var Employee = Parse.Object.extend("Employee");
-                                      var newEmployee = new Employee();
+                console.log("made http request to get user info");
+            });
 
-                                      newEmployee.set("email", data['email']);
-                                      newEmployee.set("firstName", data['given_name']);
-                                      newEmployee.set("lastName", data['family_name']);
+            var getUserInfo = function ($endpoint) {
+                $http.get($endpoint).
+                success(function (data, status, headers, config) {
+                    console.log(data);
 
-                                      newEmployee.save(null, {
-                                          success: function(newEmployee) {
-                                              // Execute any logic that should take place after the object is saved.
-                                              alert('New object created with objectId: ' + newEmployee.id);
-                                          },
-                                          error: function(gameScore, error) {
-                                              // Execute any logic that should take place if the save fails.
-                                              // error is a Parse.Error with an error code and message.
-                                              alert('Failed to create new object, with error code: ' + error.message);
-                                          }
-                                      });
-                                  }).
-                                  error(function(data, status, headers, config) {
-                                      console.log("error");
-                                  });
-                      };
+                    getEmployee(data);
+                }).
+                error(function (data, status, headers, config) {
+                    console.log("error");
+                });
+            };
 
-                      getUserInfo($endpoint);
+            var getEmployee = function(data){
+                console.log("getEmployee called");
 
-                      console.log("made http request to get user info");
-                  });
-                  $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
-                      $scope.authenicated = false;
-                      console.log('Not signed into Google Plus.');
-                  });
+                var Employee = Parse.Object.extend("Employee");
+                var query = new Parse.Query(Employee);
 
-              });
+                var newEmployee = new Employee();
+                query.equalTo("email", data['email']);
+                query.first({
+                    success: function(object){
+                        if (typeof object === "undefined") {
+                            console.log("Saving new object");
+                            newEmployee.set("email", data['email']);
+                            newEmployee.set("firstName", data['given_name']);
+                            newEmployee.set("lastName", data['family_name']);
+                            newEmployee.set("openEvent", false);
 
-    </script>
+                            newEmployee.save(null, {
+                                success: function (newEmployee, object) {
+                                    // Execute any logic that should take place after the object is saved.
+                                    console.log('New object created with objectId: ' + newEmployee.id);
+                                },
+                                error: function (newEmployee, error) {
+                                    // Execute any logic that should take place if the save fails.
+                                    // error is a Parse.Error with an error code and message.
+                                    console.log('Failed to create new object, with error code: ' + error.message);
+                                }
+                            });
+                        } else {
+                            newEmployee = object;
+                            console.log("Found object " + object);
+                        }
+                    },
+                    error: function(error){
+                        console.log("Error: " + error.code + " " + error.message);
+                    }
+                });
+            }
+            });
+</script>
 
-  </body>
+</body>
 </html>

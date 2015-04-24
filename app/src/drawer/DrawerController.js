@@ -14,16 +14,10 @@
     self.selected     = null;
     self.drawerItems        = [
         {
-            name: 'Admin',
-            avatar: 'admin',
-            content: 'Admin panel',
-            relativeUrl: '/admin'
-        },
-        {
             name: 'Log New',
             avatar: 'notebook',
             content: 'Clock in goes here',
-            relativeUrl: '/login'
+            relativeUrl: '/clock_in'
         },
         {
             name: 'Events',
@@ -32,10 +26,10 @@
             relativeUrl: '/events'
         },
         {
-            name: 'Settings',
+            name: 'Login',
             avatar: 'settings',
             content: "User settings",
-            relativeUrl: '/settings'
+            relativeUrl: '/login'
         },
     ];
     self.selectItem   = selectItem;
