@@ -91,25 +91,17 @@
 
                         $scope.employeeName = newEmployee.get("firstName") + " " + newEmployee.get("lastName");
 
-                        //$rootScope.employeeEmail = newEmployee.get("email");
-                        //$rootScope.employeeId = newEmployee.get("objectId");
-                        //$rootScope.employee = newEmployee;
                         $cookies.employeeId = newEmployee.id;
                         $cookies.employeeName = newEmployee.get("firstName") + " " + newEmployee.get("lastName");
                     } else {
                         console.log(object.get("email"));
-
-                        newEmployee = object;
                         console.log("Found object " + object);
                         console.dir(object);
 
-                        $scope.employeeName = newEmployee.get("firstName") + " " + newEmployee.get("lastName");
+                        $scope.employeeName = object.get("firstName") + " " + object.get("lastName");
 
-                        //$rootScope.employeeEmail = newEmployee.get("email");
-                        //$rootScope.employeeId = newEmployee.get("objectId");
-                        //$rootScope.employee = newEmployee;
-                        $cookies.employeeId = newEmployee.id;
-                        $cookies.employeeName = newEmployee.get("firstName") + " " + newEmployee.get("lastName");
+                        $cookies.employeeId = object.id;
+                        $cookies.employeeName = object.get("firstName") + " " + object.get("lastName");
                     }
                 },
                 error: function (error) {
