@@ -5,39 +5,59 @@
 (function () {
     var app = angular.module('timeclock');
     //in line event listener to handle the login
-    app.controller('EventsController', function ($rootScope, $scope, $location, $cookies) {
+    app.controller('EventsController', function ($rootScope, $scope, $location, $cookies, $interval) {
         $scope.$watch('$viewContentLoaded', function () {
             console.log("Firing the on view loaded method in the events controller");
 
-            var getEventsTest = function() {
-                var Employee = Parse.Object.extend("Employee");
-                var employee = new Employee();
-                employee.id = $cookies.employeeId;
+            //TODO check for this
+            //if($cookies.employeeId)
 
-                var Event = Parse.Object.extend("Event");
-                var query = new Parse.Query(Event);
-
-
-                query.equalTo("created_by", employee);
-                query.limit(50);
-                query.descending("createdAt");
-                query.find({
-                    success: function (object) {
-                        if (typeof object === "undefined") {
-                            console.log("Query returned undefined object");
-                        } else {
-                            $scope.employeeName = $cookies.employeeName;
-                            $scope.events = object;
-                            console.dir(object);
-                        }
-                    },
-                    error: function (error) {
-                        console.log("Error: " + error.code + " " + error.message);
-                    }
-                });
-            };
             getEventsTest();
         });
+
+        var getEventsTest = function() {
+            var Employee = Parse.Object.extend("Employee");
+            var employee = new Employee();
+            employee.id = $cookies.employeeId;
+
+            var Event = Parse.Object.extend("Event");
+            var query = new Parse.Query(Event);
+
+
+            query.equalTo("created_by", employee);
+            query.limit(50);
+            query.descending("createdAt");
+            query.find({
+                success: function (object) {
+                    console.log("The events query");
+                    console.dir(object);
+                    if (typeof object === "undefined") {
+                        console.log("Query returned undefined object");
+                    } else if (object.length === 0) {
+                        console.log("Query returned no events");
+                        $scope.events = [];
+                        console.dir($scope.events);
+                    } else {
+                        $scope.employeeName = $cookies.employeeName;
+                        $scope.events = object;
+
+                        if(object[0].get("time_out") === null){
+                            $scope.eventType = "Time In";
+                            $scope.btnText = "Clock Out";
+                            $scope.lastEvent = object[0].get("time_in");
+                        } else {
+                            $scope.eventType = "Time Out";
+                            $scope.btnText = "Clock In";
+                            $scope.lastEvent = object[0].get("time_out");
+                        }
+                        console.dir(object);
+                    }
+                },
+                error: function (error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                }
+            });
+        };
 
         $scope.btnText = "Clock In";
         $scope.employeeStatus = "Unknown";
@@ -67,6 +87,7 @@
 
                 saveEvent(employee);
                 toggleText();
+                getEventsTest();
             }
         };
 
@@ -104,12 +125,18 @@
 
         var newEvent = function(employee) {
             console.log("saving new event");
-            var Event = Parse.Object.extend("Event");
-            var newEvent = new Event();
+            var TimeEvent = Parse.Object.extend("Event");
+            var newEvent = new TimeEvent();
+
+            employee.id = $cookies.employeeId;
 
             newEvent.set("created_by", employee);
             newEvent.set("time_in", Date.now());
             newEvent.set("time_out", null);
+
+            console.dir(employee);
+            console.dir(newEvent);
+
             newEvent.save();
         };
 
@@ -146,5 +173,13 @@
                 }
             });
         };
+
+        $scope.AssignedDate = Date;
+
+        //set the interval to one second and update the time
+        $interval(function(){
+        }, 1000);
+
+        $scope.timeZone = new Date().toString().match(/([A-Z]+[\+-][0-9]+.*)/)[1];
     });
 })();

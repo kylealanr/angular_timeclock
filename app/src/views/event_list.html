@@ -6,5 +6,11 @@
                 <p class="md-body-1">Time Out:  {{ event.get("time_out") | date:'medium' }}</p>
             </md-card-content>
         </md-card>
+        <md-card ng-show="events.length === 0">
+            <md-card-content>
+                <p>No Events to Show</p>
+                <p>Log in and clock in to populate the list</p>
+            </md-card-content>
+        </md-card>
     </md-content>
 </div>

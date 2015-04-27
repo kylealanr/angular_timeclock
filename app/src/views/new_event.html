@@ -2,7 +2,8 @@
     <md-content>
         <md-card ng-controller="EventsController">
             <md-card-content>
-                <p>Employee Status {{ $cookies.employeeStatus || "Unknown" }}</p>
+                <p><strong>Last event:</strong> {{ (lastEvent | date:'yyyy-MM-dd HH:mm:ss') || "Unknown" }}  <strong>Type:</strong> {{ eventType || 'Unknown' }}</p>
+                <p> {{ AssignedDate.now() | date:'yyyy-MM-dd HH:mm:ss' }}   {{ timeZone || 'unknown timezone' }} </p>
                 <md-button class="md-raised md-primary" ng-click="clockEvent()">{{ btnText || "Clock In" }}</md-button>
             </md-card-content>
         </md-card>
