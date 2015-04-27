@@ -26,7 +26,7 @@
                 console.log("made http request to get user info");
             } else {
                 console.log("auth event fired, getting the user from the cookie");
-                getEmployeeFromCookie();
+                //getEmployeeFromCookie();
             }
 
         });

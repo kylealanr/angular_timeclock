@@ -7,22 +7,18 @@
     app.controller('ExitController', function ($scope, $rootScope, $cookies, $location) {
         $scope.clearData = function() {
 
-            delete $cookies["APISID"];
-            delete $cookies["GCSCU_3CD5E69A3A007417E081FFB8CDFABB1522011194_H4"];
-            delete $cookies["HSID"];
-            delete $cookies["NID"];
-            delete $cookies["PREF"];
-            delete $cookies["SAPISID"];
-            delete $cookies["SID"];
-            delete $cookies["SSID"];
-            delete $cookies["gsScrollPos"];
+            $rootScope.$broadcast('event:google-plus-signin-failure');
+        };
+
+        $scope.$on('event:google-plus-signin-failure', function () {
             delete $cookies["employeeId"];
             delete $cookies["employeeName"];
             //$cookies.employeeId = undefined;
             //$cookies.employeeName = undefined;
             $scope.clearDataSuccessMessage = "Success!";
             console.log("cleared all data");
-        };
+            gapi.auth.signOut();
+        });
 
         $scope.authRedirect = function() {
             $location.path('/login');
