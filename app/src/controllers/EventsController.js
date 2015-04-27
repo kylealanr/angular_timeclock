@@ -10,12 +10,14 @@
             console.log("Firing the on view loaded method in the events controller");
 
             //TODO check for this
-            //if($cookies.employeeId)
-
-            getEventsTest();
+            if (typeof $cookies.employeeId === "undefined") {
+                $location.path('/login');
+            } else {
+                getEvents();
+            }
         });
 
-        var getEventsTest = function() {
+        var getEvents = function() {
             var Employee = Parse.Object.extend("Employee");
             var employee = new Employee();
             employee.id = $cookies.employeeId;
@@ -87,7 +89,7 @@
 
                 saveEvent(employee);
                 toggleText();
-                getEventsTest();
+                getEvents();
             }
         };
 
