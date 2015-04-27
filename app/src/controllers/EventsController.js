@@ -88,16 +88,7 @@
                 });
 
                 saveEvent(employee);
-                toggleText();
                 getEvents();
-            }
-        };
-
-        var toggleText = function() {
-            if ($scope.btnText === "Clock In"){
-                $scope.btnText = "Clock Out"
-            } else {
-                $scope.btnText = "Clock In";
             }
         };
 

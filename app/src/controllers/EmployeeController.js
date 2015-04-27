@@ -7,68 +7,60 @@
 
     app.controller('EmployeeController', function ($scope, $http, $rootScope, $cookies, $location) {
         $scope.$watch('$viewContentLoaded', function () {
-            console.log("this should be loading with the page");
             $scope.employeeName = $cookies.employeeName;
+
             if (typeof $cookies.employeeId === "undefined") {
                 console.log("no employeeId cookie yet");
                 $location.path('/login');
             } else {
-                var Employee = Parse.Object.extend("Employee");
-                var employee = new Employee();
-
-                var userQuery = new Parse.Query(Employee);
-                userQuery.equalTo("objectId", $cookies.employeeId);
-                userQuery.first({
-                    success: function (object) {
-                        employee = object;
-                        console.log("this is the employee saved in the cookie");
-                        console.dir(employee);
-                    },
-                    error: function (error) {
-                        console.log("Error: " + error.code + " " + error.message);
-                    }
-                });
+                getEmployeeFromCookie();
             }
         });
 
         $scope.$on('event:google-plus-signin-success', function (event, authResult) {
             if (typeof $cookies.employeeId === "undefined") {
+                console.log("auth event fired, making the request to the endpoint");
                 console.log("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + authResult.access_token);
                 var $endpoint = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + authResult.access_token;
                 getGooleAccountInfo($endpoint);
                 console.log("made http request to get user info");
             } else {
-                var Employee = Parse.Object.extend("Employee");
-                var employee = new Employee();
-
-                var userQuery = new Parse.Query(Employee);
-                userQuery.equalTo("objectId", $cookies.employeeId);
-                userQuery.first({
-                    success: function (object) {
-                        employee = object;
-                        console.log("this is the employee saved in the cookie");
-                        console.dir(employee);
-                    },
-                    error: function (error) {
-                        console.log("Error: " + error.code + " " + error.message);
-                    }
-                });
+                console.log("auth event fired, getting the user from the cookie");
+                getEmployeeFromCookie();
             }
 
         });
+
+        var getEmployeeFromCookie = function() {
+            var Employee = Parse.Object.extend("Employee");
+            var employee = new Employee();
+
+            var userQuery = new Parse.Query(Employee);
+            userQuery.equalTo("objectId", $cookies.employeeId);
+            userQuery.first({
+                success: function (object) {
+                    employee = object;
+                    console.log("this is the employee saved in the cookie");
+                    console.dir(employee);
+                },
+                error: function (error) {
+                    console.log("Error: " + error.code + " " + error.message);
+                }
+            });
+        };
 
         var getGooleAccountInfo = function ($endpoint) {
             $http.get($endpoint).
                 success(function (data, status, headers, config) {
                     console.log(data);
-                    getEmployee(data);
+                    getEmployeeFromGoogleAccountData(data);
                 }).
                 error(function (data, status, headers, config) {
                     console.log("error");
                 });
         };
 
-        var getEmployee = function (data) {
+        var getEmployeeFromGoogleAccountData = function (data) {
             console.log("getEmployee called");
 
             var Employee = Parse.Object.extend("Employee");
@@ -99,9 +91,9 @@
 
                         $scope.employeeName = newEmployee.get("firstName") + " " + newEmployee.get("lastName");
 
-                        $rootScope.employeeEmail = newEmployee.get("email");
-                        $rootScope.employeeId = newEmployee.get("objectId");
-                        $rootScope.employee = newEmployee;
+                        //$rootScope.employeeEmail = newEmployee.get("email");
+                        //$rootScope.employeeId = newEmployee.get("objectId");
+                        //$rootScope.employee = newEmployee;
                         $cookies.employeeId = newEmployee.id;
                         $cookies.employeeName = newEmployee.get("firstName") + " " + newEmployee.get("lastName");
                     } else {
@@ -113,9 +105,9 @@
 
                         $scope.employeeName = newEmployee.get("firstName") + " " + newEmployee.get("lastName");
 
-                        $rootScope.employeeEmail = newEmployee.get("email");
-                        $rootScope.employeeId = newEmployee.get("objectId");
-                        $rootScope.employee = newEmployee;
+                        //$rootScope.employeeEmail = newEmployee.get("email");
+                        //$rootScope.employeeId = newEmployee.get("objectId");
+                        //$rootScope.employee = newEmployee;
                         $cookies.employeeId = newEmployee.id;
                         $cookies.employeeName = newEmployee.get("firstName") + " " + newEmployee.get("lastName");
                     }
