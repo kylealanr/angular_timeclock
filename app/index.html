@@ -20,7 +20,7 @@
     <md-button class="menu" hide-gt-sm ng-click="drawerItems.toggleList()" aria-label="Show Category List">
         <md-icon md-svg-icon="menu"></md-icon>
     </md-button>
-    <h1>Geekabytes - Employee Timeclock</h1>
+    <h1 ng-controller="EmployeeController">{{ employeeName || 'Geekabytes - Employee Timeclock'}}</h1>
 </md-toolbar>
 
 <div flex layout="row">
@@ -43,116 +43,18 @@
 
 <script src="./bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-route/angular-route.min.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
 <script src="./bower_components/angular-animate/angular-animate.min.js"></script>
 <script src="./bower_components/angular-aria/angular-aria.min.js"></script>
 <script type="text/javascript" src="./bower_components/angular-material/angular-material.min.js"></script>
 <script src="./bower_components/angular-directive.g-signin/google-plus-signin.js"></script>
 
+<script src="src/main.js"></script>
 <script src="src/drawer/Drawer.js"></script>
 <script src="src/drawer/DrawerController.js"></script>
-
-<script type="text/javascript">
-
-    angular
-        .module('timeclock', ['ngMaterial', 'drawer', 'directive.g+signin', 'ngRoute'])
-        .config(function ($mdThemingProvider, $mdIconProvider, $routeProvider) {
-
-            $mdIconProvider
-                    .defaultIconSet("./assets/svg/avatars.svg", 128)
-                    .icon("menu", "./assets/svg/menu.svg", 24)
-                    .icon("admin", "./assets/svg/admin.svg", 128)
-                    .icon("archive", "./assets/svg/archive.svg", 128)
-                    .icon("notebook", "./assets/svg/notebook.svg", 100)
-                    .icon("settings", "./assets/svg/settings.svg", 128);
-
-            $mdThemingProvider.theme('default')
-                    .primaryPalette('cyan')
-                    .accentPalette('light-blue');
-
-            $routeProvider
-                    .when('/', {
-                        templateUrl: 'src/users/views/auth.html'
-                    })
-                    .when('/login', {
-                        templateUrl: 'src/users/views/auth.html'
-                    })
-                    .when('/events', {
-                        templateUrl: 'src/events/views/event_list.html'
-                    })
-                    .when('/clock_in', {
-                        templateUrl: 'src/events/views/new_event.html'
-                    }).otherwise('', {
-                        templateUrl: 'src/users/views/auth.html'
-                    });
-        })
-        //in line event listener to handle the login
-        .controller('ExampleCtrl', function ($scope, $http) {
-            Parse.initialize("AVKrYGejn3pUMZ3m1JiYWkG2tnT3FhFSQM4iWgz6", "QPHxANIlclXKQZix2WDuVtbFMUBrSkVZCFSeNsrb");
-
-            $scope.$on('event:google-plus-signin-success', function (event, authResult) {
-                $scope.authenicated = true;
-                console.log('Signed in!');
-                //I'm getting back a valid access token, I need to pass it off to the controller to get the users name
-                console.log("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + authResult.access_token);
-                var $endpoint = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + authResult.access_token;
-
-                getUserInfo($endpoint);
-
-                console.log("made http request to get user info");
-            });
-
-            var getUserInfo = function ($endpoint) {
-                $http.get($endpoint).
-                success(function (data, status, headers, config) {
-                    console.log(data);
-
-                    getEmployee(data);
-                }).
-                error(function (data, status, headers, config) {
-                    console.log("error");
-                });
-            };
-
-            var getEmployee = function(data){
-                console.log("getEmployee called");
-
-                var Employee = Parse.Object.extend("Employee");
-                var query = new Parse.Query(Employee);
-
-                var newEmployee = new Employee();
-                query.equalTo("email", data['email']);
-                query.first({
-                    success: function(object){
-                        if (typeof object === "undefined") {
-                            console.log("Saving new object");
-                            newEmployee.set("email", data['email']);
-                            newEmployee.set("firstName", data['given_name']);
-                            newEmployee.set("lastName", data['family_name']);
-                            newEmployee.set("openEvent", false);
-
-                            newEmployee.save(null, {
-                                success: function (newEmployee, object) {
-                                    // Execute any logic that should take place after the object is saved.
-                                    console.log('New object created with objectId: ' + newEmployee.id);
-                                },
-                                error: function (newEmployee, error) {
-                                    // Execute any logic that should take place if the save fails.
-                                    // error is a Parse.Error with an error code and message.
-                                    console.log('Failed to create new object, with error code: ' + error.message);
-                                }
-                            });
-                        } else {
-                            newEmployee = object;
-                            console.log("Found object " + object);
-                        }
-                    },
-                    error: function(error){
-                        console.log("Error: " + error.code + " " + error.message);
-                    }
-                });
-            }
-            });
-</script>
+<script src="src/controllers/ExitController.js"></script>
+<script src="src/controllers/EmployeeController.js"></script>
+<script src="src/controllers/EventsController.js"></script>
 
 </body>
 </html>

@@ -12,6 +12,7 @@
     "angular-material": "^0.8.0",
     "angular-directive.g-signin": "",
     "angular-route": "",
+    "angular-cookies": "",
     "parse-angular-patch": ""
   },
   "devDependencies": {

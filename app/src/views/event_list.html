@@ -1,0 +1,10 @@
+<div flex layout="column">
+    <md-content ng-controller="EventsController">
+        <md-card ng-repeat="event in events">
+            <md-card-content>
+                <p class="md-body-1">Time In:   {{ (event.get("time_in") | date:'medium') || 'N/A' }}</p>
+                <p class="md-body-1">Time Out:  {{ event.get("time_out") | date:'medium' }}</p>
+            </md-card-content>
+        </md-card>
+    </md-content>
+</div>
